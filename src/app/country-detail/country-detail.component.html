@@ -1,0 +1,66 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div class="container" *ngIf="!loading">
+    <div class="row">
+        <div class="col text-center pb-1">
+            <h2>{{getCountryNameByCode(code)}}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-4 col-sm-12">
+            <div class="card text-black bg-light mb-3" >
+                <div class="card-body text-center">
+                    <h5 class="card-title">Confirmed</h5>
+                    <p class="card-text stats-numbers">{{stats?.confirmed}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-4 col-sm-12">
+            <div class="card text-black bg-light mb-3" >
+                <div class="card-body text-center">
+                    <h5 class="card-title">Deaths</h5>
+                    <p class="card-text stats-numbers">{{stats?.deaths}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-4 col-sm-12">
+            <div class="card text-black bg-light mb-3" >
+                <div class="card-body text-center">
+                    <h5 class="card-title">Recovered</h5>
+                    <p class="card-text stats-numbers">{{stats?.recovered}}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-sm-12 col-md-12 mt-5">
+            <input [(ngModel)]="date" 
+                    (ngModelChange)="getDataByDate()" type="text" 
+                    placeholder="Select date"
+                    [bsConfig]="{ dateInputFormat: 'MMMM DD, YYYY'}" class="bg-light form-control" bsDatepicker  autocomplete="off">
+            <img (click)="refresh()" src="assets/refresh.svg" class="refresh_icon">
+        </div>
+       
+        <div *ngIf="showAlert" class="col-lg-12 col-sm-12 col-md-12 alert alert-danger" role="alert">
+            {{alertMessage}}
+          </div>
+
+        <div class="col-lg-12 col-sm-12 col-md-12 mt-5" style="margin-left: 5%;">
+            <ngx-charts-bar-vertical
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="barGraphData"
+            [gradient]="gradient"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [legend]="legend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [yAxisTickFormatting]= "axisYFormat"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel">
+          </ngx-charts-bar-vertical> 
+        </div>
+    </div>
+</div>

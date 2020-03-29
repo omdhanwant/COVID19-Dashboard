@@ -1,0 +1,81 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div class="container" *ngIf="!loading">
+    <div class="row">
+        <div class="col text-center pb-1">
+            <h2>Global Stats ({{globalData?.date | date: 'yyyy-MM-dd'}})</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card text-black bg-light mb-3" >
+                <div class="card-body text-center">
+                    <h5 class="card-title">Confirmed</h5>
+                    <p class="card-text stats-numbers">{{globalData?.result.confirmed}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card text-black bg-light mb-3" >
+                <div class="card-body text-center">
+                    <h5 class="card-title">Deaths</h5>
+                    <p class="card-text stats-numbers">{{globalData?.result.deaths}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card text-black bg-light mb-3" >
+                <div class="card-body text-center">
+                    <h5 class="card-title">Recovered</h5>
+                    <p class="card-text stats-numbers">{{globalData?.result.recovered}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col mt-5" style="margin-left: 5%;">
+            <ngx-charts-line-chart
+            [view]="view"
+            [scheme]="colorScheme"
+            [legend]="legend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [yAxisTickFormatting]= "axisYFormat"
+            [timeline]="timeline"
+            [results]="data"
+            >
+          </ngx-charts-line-chart>            
+        </div>
+
+
+        <div class="col mt-5" style="margin-left: 5%;">
+            <!-- <ngx-charts-bar-vertical-stacked
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="data"
+            [gradient]="'true'"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [legend]="legend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            [animations]="animations">
+          </ngx-charts-bar-vertical-stacked> -->
+
+          <ngx-charts-pie-chart
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="pieData"
+          [gradient]="'true'"
+          [legend]="'false'"
+          [labels]="showLabels"
+          [doughnut]="'true'"
+          >
+        </ngx-charts-pie-chart>          
+        </div>
+    </div>
+</div>

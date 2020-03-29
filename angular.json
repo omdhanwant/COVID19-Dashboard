@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "covid": {
+    "COVID19-Dashboards": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/covid",
+            "outputPath": "dist/COVID19-Dashboards",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -24,9 +24,15 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/popper/client/mocha/client.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -63,18 +69,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "covid:build"
+            "browserTarget": "COVID19-Dashboards:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "covid:build:production"
+              "browserTarget": "COVID19-Dashboards:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "covid:build"
+            "browserTarget": "COVID19-Dashboards:build"
           }
         },
         "test": {
@@ -89,9 +95,12 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           }
         },
         "lint": {
@@ -111,15 +120,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "covid:serve"
+            "devServerTarget": "COVID19-Dashboards:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "covid:serve:production"
+              "devServerTarget": "COVID19-Dashboards:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "covid"
+  "defaultProject": "COVID19-Dashboards"
 }

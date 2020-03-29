@@ -1,0 +1,43 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --bs: 0.25em 0.25em 0.75em rgba(0,0,0,.25),
+    0.125em 0.125em 0.25em rgba(0,0,0,.15);
+
+    --primary-color: #6166a1
+}
+
+body {
+    background-color: #fff;
+}
+
+.container {
+    padding: 2rem;
+}
+
+.card {
+    border-radius: 1rem!important;
+    box-shadow: var(--bs);
+}
+
+.stats-numbers {
+    font-size: 20px;
+}
+
+.text-bold {
+    font-weight: 600;
+}
+
+/* datepicker */
+ .bs-datepicker-head {
+    background-color: var(--primary-color)!important;
+  }
+  
+   .bs-datepicker-body table td span.selected,
+   .bs-datepicker-body table td.selected span,
+   .bs-datepicker-body table td span[class*="select-"]:after,
+   .bs-datepicker-body table td[class*="select-"] span:after {
+    background-color: var(--primary-color)!important;
+  }
+   .bs-datepicker-body table td.week span {
+    color: var(--primary-color)!important;
+  }

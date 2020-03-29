@@ -1,0 +1,8 @@
+.container {
+    padding: 2rem;
+}
+
+.card {
+    border-radius: 1rem!important;
+    box-shadow: var(--bs);
+}

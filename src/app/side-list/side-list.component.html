@@ -1,0 +1,34 @@
+<div class="container side-list" id="container_dash">
+    <button (click)="toggle()" class="nav-toggle" aria-label="toggle navigation">
+        <span class="hamburger"></span>
+    </button>
+    <div class="input-group mb-3">
+        <input [(ngModel)]="search" type="text" class="form-control" placeholder="Search by country name or code" aria-label="country" aria-describedby="country-name">
+      </div>
+    <ul class="list-group list-group__scroll">
+        <li
+        class="list-group-item custom__li__action borderless" style="padding-bottom: 30px;"
+        routerLink="/dashboard" routerLinkActive="active-item current" >
+            <div class="thumbnail" ></div>
+            
+                <div class="text-bold text-center">
+                    Global Statistics 
+                </div>
+
+        </li>
+        <li *ngFor="let data of allCountries | appFilter: 'name': 'code': search ;let i=index;" 
+        class="list-group-item borderless custom__li__action"
+        routerLink="/country-detail" [queryParams]='{code: data.code}' routerLinkActive="active-item current" >
+            <div class="thumbnail" [style.backgroundImage]="'url(' + data.flag + ')'" ></div>
+            
+                <div class="text-bold country">
+                    {{data.name}}  
+                </div>
+                <div class=" text-bold float-right stat">
+                    {{data.confirmed}}
+                </div>
+
+        </li>
+      </ul>
+</div>
+<!-- <script src="toggle.js"></script> -->
