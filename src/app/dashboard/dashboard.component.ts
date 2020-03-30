@@ -4,6 +4,8 @@ import { take } from "rxjs/operators";
 import { GlobalData } from '../models/globalData';
 import { environment } from 'src/environments/environment';
 const countryData = environment.countries;
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -14,9 +16,10 @@ export class DashboardComponent implements OnInit {
   view: any[] = [900, 500];
 
   // options
-  data: any[];
+  lineChartdata: any[];
   pieData: any[];
-  legend: boolean = true;
+  barGraphData: any[];
+  legend: boolean = false;
   showLabels: boolean = true;
   animations: boolean = true;
   xAxis: boolean = true;
@@ -28,24 +31,52 @@ export class DashboardComponent implements OnInit {
   timeline: boolean = true;
 
   colorScheme = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+    domain: ['#C7B9B6', '#ACD4DC', '#B4A6C4', '#CA97C7', '#FFA5D2', '#CDCAAD']
   };
 
   globalData: GlobalData
+  date: Date = null;
+  maxDate: Date = new Date();
   constructor(private service: DashboardServiceService) {
-    this.globalData = null;
    }
 
   ngOnInit() {
     this.loading = true;
+    this.globalData = null;
+    this.date = null
+    this.barGraphData = null;
+    this.pieData = null;
+    this.lineChartdata = null;
     this.service.getGlobalCount().pipe(take(1)).subscribe((response: GlobalData) => 
-    {this.globalData = response},(error) => this.loading = false);
+    {
+      this.globalData = response
+      this.date = moment(this.globalData.date).toDate();
+      this.maxDate = moment(this.globalData.date).toDate();
+    },(error) => this.loading = false);
+    
     this.service.getAllCountriesCount().pipe(take(1)).subscribe(response => {
       this.loading = false;
-      this.data =  this.generateData(response['result'])
+      this.lineChartdata =  this.generateData(response['result'])
       this.pieData =  this.generatePieChartData(response['result'])
     },(error) => this.loading = false);
   }
+
+  getDataByDate() {
+    this.pieData = null;
+    this.lineChartdata = null;
+    this.loading = true;
+    this.service.getGlobalCountByDate(moment(this.date).format('YYYY-MM-DD')).pipe(take(1)).subscribe((response: GlobalData) => 
+    {
+      this.globalData = response
+      // this.date = moment(this.globalData.date).toDate();
+    },(error) => this.loading = false);
+    
+    this.service.getGlobalDateWiseCount().pipe(take(1)).subscribe(response => {
+      this.loading = false;
+      this.barGraphData = this.generateBarChartData(response['result'])
+    },(error) => this.loading = false);
+  }
+
 
   axisYFormat(val) {
     return val.toLocaleString() + ' people'
@@ -85,6 +116,21 @@ export class DashboardComponent implements OnInit {
         value: data[Object.keys(data)[0]].confirmed
       });
     });
+    return countries
+  }
+
+  generateBarChartData(arr) {
+    let countries = [];
+    const len = Object.keys(arr).length
+    const index = Object.keys(arr).findIndex(d => d == moment(this.date).format('YYYY-MM-DD'))
+    const data = len > 5 ?  Object.keys(arr).slice(index,index + 5) : Object.keys(arr)
+    Array.prototype.forEach.call(data, date => {
+      countries.push({
+        name: date.toString(),
+        value: arr[date].confirmed
+      });
+    })
+
     return countries
   }
 

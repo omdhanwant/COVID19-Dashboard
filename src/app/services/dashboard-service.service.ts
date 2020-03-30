@@ -15,6 +15,14 @@ export class DashboardServiceService {
     return this.httpClient.get(`${environment.hostUrl}/api/${environment.version}/global`);
   }
 
+  getGlobalCountByDate(date) {
+    return this.httpClient.get(`${environment.hostUrl}/api/${environment.version}/global/${date}`);
+  }
+
+  getGlobalDateWiseCount() {
+    return this.httpClient.get(`${environment.hostUrl}/api/${environment.version}/global/count`);
+  }
+
   getAllCountriesCount() {
     return this.httpClient.get(`${environment.hostUrl}/api/${environment.version}/global/latest`);
   }

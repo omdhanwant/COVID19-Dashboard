@@ -6,3 +6,17 @@
     border-radius: 1rem!important;
     box-shadow: var(--bs);
 }
+
+.refresh_icon {
+    position: relative;
+    width: 20px;
+    float: right;
+    top: -29px;
+    left: -40px;
+}
+
+.datepicker {
+    max-width: 70%;
+    margin: 0 auto;
+}
+

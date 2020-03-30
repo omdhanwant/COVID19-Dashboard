@@ -1,8 +1,17 @@
 <ngx-loading [show]="loading"></ngx-loading>
 <div class="container" *ngIf="!loading">
     <div class="row">
-        <div class="col text-center pb-1">
-            <h2>Global Stats ({{globalData?.date | date: 'yyyy-MM-dd'}})</h2>
+        <div class="col-sm-12 col-md-12 col-lg-6 text-center pb-1">
+            <h2>Global Stats</h2>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-6">
+            <input [(ngModel)]="date" 
+                    (ngModelChange)="getDataByDate()" type="text" 
+                    [maxDate]="maxDate"
+                    placeholder="Select date"
+                    [bsConfig]="{ dateInputFormat: 'MMMM DD, YYYY'}" class="form-control datepicker" bsDatepicker  autocomplete="off">
+            <img (click)="refresh()" src="assets/refresh.svg" class="refresh_icon">
         </div>
     </div>
     <div class="row">
@@ -31,7 +40,11 @@
             </div>
         </div>
 
-        <div class="col mt-5" style="margin-left: 5%;">
+    </div>
+
+    <div class="row">
+
+        <div *ngIf="lineChartdata" class="col-lg-12 col-sm-12 col-md-12 graph__container mt-5">
             <ngx-charts-line-chart
             [view]="view"
             [scheme]="colorScheme"
@@ -44,38 +57,40 @@
             [yAxisLabel]="yAxisLabel"
             [yAxisTickFormatting]= "axisYFormat"
             [timeline]="timeline"
-            [results]="data"
+            [results]="lineChartdata"
             >
           </ngx-charts-line-chart>            
         </div>
 
 
-        <div class="col mt-5" style="margin-left: 5%;">
-            <!-- <ngx-charts-bar-vertical-stacked
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="data"
-            [gradient]="'true'"
-            [xAxis]="xAxis"
-            [yAxis]="yAxis"
-            [legend]="legend"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel"
-            [animations]="animations">
-          </ngx-charts-bar-vertical-stacked> -->
-
+        <div *ngIf="pieData" class="col-lg-12 col-sm-12 col-md-12 graph__container mt-5">
           <ngx-charts-pie-chart
           [view]="view"
           [scheme]="colorScheme"
           [results]="pieData"
           [gradient]="'true'"
-          [legend]="'false'"
+          [legend]="legend"
           [labels]="showLabels"
           [doughnut]="'true'"
           >
         </ngx-charts-pie-chart>          
+        </div>
+
+        <div *ngIf="barGraphData" class="col-lg-12 col-sm-12 col-md-12 graph__container mt-5">
+            <ngx-charts-bar-vertical
+            [view]="view"
+            [scheme]="colorScheme"
+            [results]="barGraphData"
+            [gradient]="true"
+            [xAxis]="xAxis"
+            [yAxis]="yAxis"
+            [legend]="legend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [yAxisTickFormatting]= "axisYFormat"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel">
+          </ngx-charts-bar-vertical>          
         </div>
     </div>
 </div>

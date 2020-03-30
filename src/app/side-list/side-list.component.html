@@ -18,7 +18,7 @@
         </li>
         <li *ngFor="let data of allCountries | appFilter: 'name': 'code': search ;let i=index;" 
         class="list-group-item borderless custom__li__action"
-        routerLink="/country-detail" [queryParams]='{code: data.code}' routerLinkActive="active-item current" >
+        routerLink="/country-detail" [queryParams]='{code: data.code, flag: data.flag}' routerLinkActive="active-item current" >
             <div class="thumbnail" [style.backgroundImage]="'url(' + data.flag + ')'" ></div>
             
                 <div class="text-bold country">

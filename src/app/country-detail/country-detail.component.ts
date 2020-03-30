@@ -27,7 +27,7 @@ export class CountryDetailComponent implements OnInit {
   yAxis: boolean = true;
   showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = true;
-  xAxisLabel: string = '' //'Metrics';
+  xAxisLabel: string = 'Metrics';
   yAxisLabel: string = 'Confirmed Cases' //'Population';
   timeline: boolean = true;
 
@@ -35,6 +35,7 @@ export class CountryDetailComponent implements OnInit {
     domain: ['#C7B9B6', '#ACD4DC', '#B4A6C4', '#CA97C7', '#FFA5D2', '#CDCAAD']
   };
   code: string;
+  flag: string;
   date: Date = null;
   alertMessage: string = ''
   showAlert: boolean = false;
@@ -50,18 +51,14 @@ export class CountryDetailComponent implements OnInit {
     this.route.queryParamMap.subscribe(param => {
       this.loading = true;
       this.code = param.get('code');
+      this.flag = param.get('flag');
       this.service.getLatestCountrySpecificCount(this.code).subscribe(res => {
-        console.log(res['result']);
         const obj = Object.keys(res['result'])[0].toString();
-        // console.log(res[obj])
         this.stats = res['result'][obj]
-        console.log(this.stats)
       })
       this.service.getCountrySpecificCount(this.code).subscribe((response) => {
         this.loading = false;
-        console.log(response['result'])
-        // this.data = this.generateData(<any[]>response['result'])
-        this.barGraphData = this.generatePieChartData(response['result'])
+        this.barGraphData = this.generateBarChartData(response['result'])
       },(error)=> this.loading = false)
     })
 
@@ -75,7 +72,7 @@ export class CountryDetailComponent implements OnInit {
     this.loading = true;
     this.service.getCountrySpecificCountByDate(this.code,moment(this.date).format('YYYY-MM-DD'))
     .subscribe(res => {
-      this.barGraphData = this.generatePieChartData(res['result'])
+      this.barGraphData = this.generateBarChartData(res['result'])
       this.loading = false
     }, (error)=>{
       this.alertMessage = `No data available for date ${moment(this.date).format('YYYY-MM-DD')}`
@@ -114,10 +111,10 @@ export class CountryDetailComponent implements OnInit {
   //   return countries
   // }
 
-  generatePieChartData(arr) {
+  generateBarChartData(arr) {
     let countries = [];
     const len = Object.keys(arr).length
-    const data = len > 5 ?  Object.keys(arr).slice(len-6,len-1) : Object.keys(arr)
+    const data = len > 5 ?  Object.keys(arr).slice(len-6,len) : Object.keys(arr)
     Array.prototype.forEach.call(data, date => {
       countries.push({
         name: date.toString(),

@@ -5,3 +5,11 @@
     top: -29px;
     right: -29px;
 }
+
+.thumbnail{
+    width: 30px;
+    height: 20px;
+    border: 1px solid lightgray;
+    background-size: cover;
+    margin: 0 auto;
+}
