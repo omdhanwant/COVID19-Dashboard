@@ -28,11 +28,17 @@ export class DashboardComponent implements OnInit {
   showXAxisLabel: boolean = true;
   xAxisLabel: string = ''//'Metrics';
   yAxisLabel: string = 'Confirmed Cases' //'Population';
+
+  doughnut: boolean = false;
   timeline: boolean = true;
 
   colorScheme = {
     domain: ['#C7B9B6', '#ACD4DC', '#B4A6C4', '#CA97C7', '#FFA5D2', '#CDCAAD']
   };
+
+  pieColorScheme = {
+    domain: ['#9966CC', '#960018', '#DC143C', '#4B0082', '#0F52BA', '	#483C32']
+  }
 
   globalData: GlobalData
   date: Date = null;

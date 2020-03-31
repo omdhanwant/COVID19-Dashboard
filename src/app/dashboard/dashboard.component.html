@@ -66,12 +66,12 @@
         <div *ngIf="pieData" class="col-lg-12 col-sm-12 col-md-12 graph__container mt-5">
           <ngx-charts-pie-chart
           [view]="view"
-          [scheme]="colorScheme"
+          [scheme]="pieColorScheme"
           [results]="pieData"
-          [gradient]="'true'"
+          gradient=false
           [legend]="legend"
           [labels]="showLabels"
-          [doughnut]="'true'"
+          [doughnut]="doughnut"
           >
         </ngx-charts-pie-chart>          
         </div>
