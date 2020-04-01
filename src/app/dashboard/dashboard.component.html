@@ -8,7 +8,7 @@
         <div class="col-sm-12 col-md-12 col-lg-6">
             <input [(ngModel)]="date" 
                     (ngModelChange)="getDataByDate()" type="text" 
-                    [maxDate]="maxDate"
+                    [maxDate]="service.maxDate"
                     placeholder="Select date"
                     [bsConfig]="{ dateInputFormat: 'MMMM DD, YYYY'}" class="form-control datepicker" bsDatepicker  autocomplete="off">
             <img (click)="refresh()" src="assets/refresh.svg" class="refresh_icon">
@@ -42,10 +42,18 @@
 
     </div>
 
+    <div class="row mt-3" >
+        <div class="col-12" style="text-align: center;margin: 0 auto;">
+            <h3>Countries majorly affected</h3>
+        </div>
+        
+    </div>
+
     <div class="row">
 
-        <div *ngIf="lineChartdata" class="col-lg-12 col-sm-12 col-md-12 graph__container mt-5">
+        <div *ngIf="lineChartdata" class="col-lg-12 col-sm-12 col-md-12 line_graph_padding graph__container mt-3">
             <ngx-charts-line-chart
+            style="margin: 0 auto"
             [view]="view"
             [scheme]="colorScheme"
             [legend]="legend"
@@ -63,8 +71,9 @@
         </div>
 
 
-        <div *ngIf="pieData" class="col-lg-12 col-sm-12 col-md-12 graph__container mt-5">
+        <div *ngIf="pieData" class="col-lg-12 col-sm-12 col-md-12 pie_graph_padding graph__container mt-5">
           <ngx-charts-pie-chart
+          style="margin: 0 auto"
           [view]="view"
           [scheme]="pieColorScheme"
           [results]="pieData"
@@ -76,8 +85,9 @@
         </ngx-charts-pie-chart>          
         </div>
 
-        <div *ngIf="barGraphData" class="col-lg-12 col-sm-12 col-md-12 graph__container mt-5">
+        <div *ngIf="barGraphData" class="col-lg-12 col-sm-12 col-md-12 bar_graph_padding graph__container mt-5">
             <ngx-charts-bar-vertical
+            style="margin: 0 auto"
             [view]="view"
             [scheme]="colorScheme"
             [results]="barGraphData"

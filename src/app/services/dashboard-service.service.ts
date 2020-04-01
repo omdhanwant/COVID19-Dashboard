@@ -9,6 +9,7 @@ import { GlobalData } from '../models/globalData';
 })
 export class DashboardServiceService {
   isNavToggle = false;
+  maxDate: Date = new Date();
   constructor(private httpClient: HttpClient) { }
 
   getGlobalCount() {

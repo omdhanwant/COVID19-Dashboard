@@ -39,7 +39,7 @@ export class CountryDetailComponent implements OnInit {
   date: Date = null;
   alertMessage: string = ''
   showAlert: boolean = false;
-  constructor(private service: DashboardServiceService, private route: ActivatedRoute) {
+  constructor(public service: DashboardServiceService, private route: ActivatedRoute) {
    }
 
   ngOnInit() {

@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
   yAxis: boolean = true;
   showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = true;
-  xAxisLabel: string = ''//'Metrics';
+  xAxisLabel: string = 'Metrics';
   yAxisLabel: string = 'Confirmed Cases' //'Population';
 
   doughnut: boolean = false;
@@ -42,8 +42,7 @@ export class DashboardComponent implements OnInit {
 
   globalData: GlobalData
   date: Date = null;
-  maxDate: Date = new Date();
-  constructor(private service: DashboardServiceService) {
+  constructor(public service: DashboardServiceService) {
    }
 
   ngOnInit() {
@@ -57,7 +56,7 @@ export class DashboardComponent implements OnInit {
     {
       this.globalData = response
       this.date = moment(this.globalData.date).toDate();
-      this.maxDate = moment(this.globalData.date).toDate();
+      this.service.maxDate = moment(this.globalData.date).toDate();
     },(error) => this.loading = false);
     
     this.service.getAllCountriesCount().pipe(take(1)).subscribe(response => {
@@ -91,24 +90,27 @@ export class DashboardComponent implements OnInit {
 
   generateData(arr) {
     let countries = [];
+    
     arr.forEach((data) => {
-      countries.push({
-        name: this.getCountryNameByCode(Object.keys(data)[0])? this.getCountryNameByCode(Object.keys(data)[0]): '',
-        series: [
-          {
-            "name": "Confirmed",
-            "value": data[Object.keys(data)[0]].confirmed
-          },
-          {
-            "name": "Deaths",
-            "value": data[Object.keys(data)[0]].deaths
-          },
-          {
-            "name": "Recovered",
-            "value": data[Object.keys(data)[0]].recovered
-          }
-        ]
-      });
+      if(data[Object.keys(data)[0]].confirmed >= 2000) {
+        countries.push({
+          name: this.getCountryNameByCode(Object.keys(data)[0])? this.getCountryNameByCode(Object.keys(data)[0]): '',
+          series: [
+            {
+              "name": "Confirmed",
+              "value": data[Object.keys(data)[0]].confirmed
+            },
+            {
+              "name": "Deaths",
+              "value": data[Object.keys(data)[0]].deaths
+            },
+            {
+              "name": "Recovered",
+              "value": data[Object.keys(data)[0]].recovered
+            }
+          ]
+        });
+      }
 
     });
     return countries
@@ -117,10 +119,12 @@ export class DashboardComponent implements OnInit {
   generatePieChartData(arr) {
     let countries = [];
     arr.forEach((data) => {
-      countries.push({
-        name: this.getCountryNameByCode(Object.keys(data)[0])? this.getCountryNameByCode(Object.keys(data)[0]): '',
-        value: data[Object.keys(data)[0]].confirmed
-      });
+      if(data[Object.keys(data)[0]].confirmed >= 2000) {
+        countries.push({
+          name: this.getCountryNameByCode(Object.keys(data)[0])? this.getCountryNameByCode(Object.keys(data)[0]): '',
+          value: data[Object.keys(data)[0]].confirmed
+        });
+      }
     });
     return countries
   }
